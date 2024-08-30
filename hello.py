@@ -85,3 +85,10 @@ def professores():
     return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False), pessoas=pessoas)
 
+@app.route('/disciplinas')
+def disciplinas():
+    return render_template('disciplinas.html')
+
+@app.route('/alunos')
+def alunos():
+    return render_template('alunos.html')
