@@ -82,7 +82,7 @@ def index():
                            known=session.get('known', False), pessoas=pessoas, current_time=datetime.utcnow())
 
 @app.route('/professores', methods=['GET', 'POST'])
-def index():
+def professores():
     form = NameForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
