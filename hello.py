@@ -63,23 +63,9 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    form = NameForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.name.data).first()
-        if user is None:
-            user = User(username=form.name.data)
-            db.session.add(user)
-            db.session.commit()
-            session['known'] = False
-        else:
-            session['known'] = True
-        session['name'] = form.name.data
-        return redirect(url_for('index'))
-    pessoas = User.query.all()  # Obtém todos os registros de usuário do banco de dados
-    return render_template('index.html', form=form, name=session.get('name'),
-                           known=session.get('known', False), pessoas=pessoas, current_time=datetime.utcnow())
+    return render_template('index.html', current_time=datetime.utcnow())
 
 @app.route('/professores', methods=['GET', 'POST'])
 def professores():
@@ -94,7 +80,7 @@ def professores():
         else:
             session['known'] = True
         session['name'] = form.name.data
-        return redirect(url_for('index'))
+        return redirect(url_for('professores'))
     pessoas = User.query.all()  # Obtém todos os registros de usuário do banco de dados
     return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False), pessoas=pessoas)
