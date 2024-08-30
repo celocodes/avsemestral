@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
-class Role(db.Model):
+class Role(db.Model): #colocar os valores das disciplinas na tabela roles
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
@@ -45,8 +45,8 @@ class User(db.Model):
 
 class NameForm(FlaskForm):
     name = StringField('Cadastre o novo Professor:', validators=[DataRequired()])
-    #discname = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
-    submit = SubmitField('Submit')
+    #role = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
+    submit = SubmitField('Cadastrar')
 
 
 @app.shell_context_processor
@@ -85,6 +85,33 @@ def professores():
     pessoas = User.query.all()  # Obtém todos os registros de usuário do banco de dados
     return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False), pessoas=pessoas)
+
+
+#@app.route('/', methods=['GET', 'POST'])
+#def index():
+#    form = NameForm()
+#    user_all = User.query.all()
+#    roles = Role.query.all()
+#    
+#    if form.validate_on_submit():
+#        user = User.query.filter_by(username=form.name.data).first()
+#        if user is None:
+#            user_role = Role.query.filter_by(name=form.role.data).first()            if user_role is None:
+#                user_role = Role(name=form.role.data)
+#                db.session.add(user_role)
+#                db.session.commit()
+#            user = User(username=form.name.data, role=user_role)
+#            db.session.add(user)
+#            db.session.commit()
+#            session['known'] = False
+#        else:
+#            session['known'] = True
+#        session['name'] = form.name.data
+#        session['role'] = form.role.data
+#        return redirect(url_for('index'))
+#    return render_template('index.html', form=form, name=session.get('name'),
+#                           known=session.get('known', False),
+#                           user_all=user_all, roles=roles)
 
 @app.route('/disciplinas')
 def disciplinas():
