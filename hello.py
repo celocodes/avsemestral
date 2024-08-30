@@ -78,4 +78,4 @@ def index():
         return redirect(url_for('index'))
     pessoas = User.query.all()  # Obtém todos os registros de usuário do banco de dados
     return render_template('index.html', form=form, name=session.get('name'),
-                           known=session.get('known', False), pessoas=pessoas)
+                           known=session.get('known', False), pessoas=pessoas, current_time=datetime.utcnow())
