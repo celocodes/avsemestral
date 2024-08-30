@@ -45,7 +45,7 @@ class User(db.Model):
 
 class NameForm(FlaskForm):
     name = StringField('Cadastre o novo Professor:', validators=[DataRequired()])
-    discname = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
+    #discname = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
     submit = SubmitField('Submit')
 
 
