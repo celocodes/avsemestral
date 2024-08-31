@@ -45,7 +45,7 @@ class User(db.Model):
 
 class NameForm(FlaskForm):
     name = StringField('Cadastre o novo Professor:', validators=[DataRequired()])
-    #role = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
+    role = SelectField('Disciplina associada:', choices=[('DSWA5', 'DSWA5'), ('GPSA5', 'GPSA5'), ('IHCA5', 'IHCA5'), ('SODA5', 'SODA5'), ('PJIA5', 'PJIA5'), ('TCOA5', 'TCOA5')])
     submit = SubmitField('Cadastrar')
 
 
@@ -77,6 +77,7 @@ def professores():
         user = User.query.filter_by(username=form.name.data).first()
         if user is None:
             user_role = Role.query.filter_by(name=form.role.data).first()
+            if user_role is None:
                 user_role = Role(name=form.role.data)
                 db.session.add(user_role)
                 db.session.commit()
