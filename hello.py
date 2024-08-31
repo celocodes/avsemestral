@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
-class Role(db.Model): #colocar os valores das disciplinas na tabela roles
+class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
@@ -72,6 +72,7 @@ def index():
 def professores():
     form = NameForm()
     roles = Role.query.all()
+    pessoas = User.query.all()
     
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name.data).first()
@@ -90,7 +91,6 @@ def professores():
         session['name'] = form.name.data
         session['role'] = form.role.data
         return redirect(url_for('professores'))
-    pessoas = User.query.all()
     return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False),
                            pessoas=pessoas, roles=roles)
