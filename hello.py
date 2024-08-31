@@ -71,7 +71,6 @@ def index():
 @app.route('/professores', methods=['GET', 'POST'])
 def professores():
     form = NameForm()
-    pessoas = User.query.all()
     roles = Role.query.all()
     
     if form.validate_on_submit():
@@ -90,6 +89,7 @@ def professores():
         session['name'] = form.name.data
         session['role'] = form.role.data
         return redirect(url_for('professores'))
+    pessoas = User.query.all()
     return render_template('professores.html', form=form, name=session.get('name'),
                            known=session.get('known', False),
                            pessoas=pessoas, roles=roles)
